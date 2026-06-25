@@ -1,0 +1,5 @@
+/cpp/main
+/rust/target/
+/zig/zig-out/
+/zig/.zig-cache/
+/golang/golang
