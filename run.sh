@@ -22,6 +22,11 @@ cd rust_ahash
 RUSTFLAGS="-C target-cpu=native" cargo build --release
 cd ..
 
+echo "[+] Compiling Rust Hashbrown library..."
+cd rust_hashbrown
+RUSTFLAGS="-C target-cpu=native" cargo build --release
+cd ..
+
 echo "[+] Compiling Zig..."
 sed -i 's|"src/root.zig"|"src/main.zig"|g' zig/build.zig
 cd zig
@@ -57,7 +62,13 @@ echo -e "\n-----------------------------------"
 echo "Rust (ahash::AHashMap)"
 echo "-----------------------------------"
 sleep 1
-./rustc_hash/target/release/rust
+./rust_ahash/target/release/rust
+
+echo -e "\n-----------------------------------"
+echo "Rust (hashbrown::HashMap;)"
+echo "-----------------------------------"
+sleep 1
+./rust_hashbrown/target/release/rust
 
 echo -e "\n-----------------------------------"
 echo "Zig (std::AutoHashMap)"
