@@ -2,12 +2,21 @@ use hashbrown::HashMap;
 use std::arch::asm;
 use std::fs;
 
-fn rdtsc() -> u64 {
-    let mut low: u32;
-    let mut high: u32;
+fn rdtscp() -> u64 {
+    let low: u32;
+    let high: u32;
+    let _aux: u32; 
+    
     unsafe {
-        asm!("rdtsc", out("eax") low, out("edx") high, options(nomem, nostack));
+        asm!(
+            "rdtscp",
+            out("eax") low,
+            out("edx") high,
+            out("ecx") _aux, 
+            options(nomem, nostack)
+        );
     }
+    
     ((high as u64) << 32) | (low as u64)
 }
 
@@ -25,41 +34,41 @@ fn main() {
     let mut get: i64 = 0;
     let mut m = HashMap::new();
 
-    let start_insert = rdtsc();
+    let start_insert = rdtscp();
     for i in 0..n {
         m.insert(i, i);
     }
-    let end_insert = rdtsc();
+    let end_insert = rdtscp();
 
-    let start_hit = rdtsc();
+    let start_hit = rdtscp();
     for i in 0..n {
         if let Some(val) = m.get(&i) {
             get += val;
         }
     }
-    let end_hit = rdtsc();
+    let end_hit = rdtscp();
 
     let mut get2: i64 = 0;
 
-    let start_miss = rdtsc();
+    let start_miss = rdtscp();
     for i in n..(n * 2) {
         if let Some(val) = m.get(&i) {
             get2 += val;
         }
     }
-    let end_miss = rdtsc();
+    let end_miss = rdtscp();
 
-    let start_update = rdtsc();
+    let start_update = rdtscp();
     for i in 0..n {
         m.insert(i, i * 2);
     }
-    let end_update = rdtsc();
+    let end_update = rdtscp();
 
-    let start_delete = rdtsc();
+    let start_delete = rdtscp();
     for i in 0..n {
         m.remove(&i);
     }
-    let end_delete = rdtsc();
+    let end_delete = rdtscp();
 
     println!("N: {}\nGet: {}", n, get - get2);
     println!("Insert: {} cycles", fmt_num(end_insert - start_insert));

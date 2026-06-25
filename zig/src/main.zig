@@ -1,7 +1,11 @@
 const std = @import("std");
 
-inline fn rdtsc() u64 {
-    return asm volatile ("rdtsc" : [ret] "={ax}" (-> u64) :: "dx");
+inline fn rdtscp() u64 {
+    return asm volatile ("rdtscp"
+        : [ret] "={ax}" (-> u64)
+        :
+        : "dx", "cx" 
+    );
 }
 
 fn printFmt(label: []const u8, val: u64) void {
@@ -53,46 +57,46 @@ pub fn main() !void {
     var m = std.AutoHashMap(i64, i64).init(gpa_allocator);
     defer m.deinit();
 
-    const start_insert = rdtsc();
+    const start_insert = rdtscp();
     var i: i64 = 0;
     while (i < N) : (i += 1) {
         try m.put(i, i);
     }
-    const end_insert = rdtsc();
+    const end_insert = rdtscp();
 
-    const start_hit = rdtsc();
+    const start_hit = rdtscp();
     i = 0;
     while (i < N) : (i += 1) {
         if (m.get(i)) |val| {
             get += val;
         }
     }
-    const end_hit = rdtsc();
+    const end_hit = rdtscp();
 
     var get2: i64 = 0;
 
-    const start_miss = rdtsc();
+    const start_miss = rdtscp();
     i = N;
     while (i < N * 2) : (i += 1) {
         if (m.get(i)) |val| {
             get2 += val;
         }
     }
-    const end_miss = rdtsc();
+    const end_miss = rdtscp();
 
-    const start_update = rdtsc();
+    const start_update = rdtscp();
     i = 0;
     while (i < N) : (i += 1) {
         try m.put(i, i * 2);
     }
-    const end_update = rdtsc();
+    const end_update = rdtscp();
 
-    const start_delete = rdtsc();
+    const start_delete = rdtscp();
     i = 0;
     while (i < N) : (i += 1) {
         _ = m.remove(i);
     }
-    const end_delete = rdtsc();
+    const end_delete = rdtscp();
 
     std.debug.print("N: {d}\n", .{N});
     std.debug.print("Get: {d}\n", .{get + get2});

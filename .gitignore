@@ -1,4 +1,5 @@
 /cpp/main
+/cpp/abseil_flat_hashmap
 /rust/target/
 /zig/zig-out/
 /zig/.zig-cache/

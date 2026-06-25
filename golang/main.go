@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func rdtsc() uint64
+func rdtscp() uint64
 
 func formatCycles(n uint64) string {
 	in := strconv.FormatUint(n, 10)
@@ -43,37 +43,37 @@ func main() {
         get := 0
 	m := make(map[int]int)
 
-	startInsert := rdtsc()
+	startInsert := rdtscp()
 	for i := 0; i < N; i++ {
 		m[i] = i
 	}
-	endInsert := rdtsc()
+	endInsert := rdtscp()
 
-	startHit := rdtsc()
+	startHit := rdtscp()
 	for i := 0; i < N; i++ {
 		get += m[i]
 	}
-	endHit := rdtsc()
+	endHit := rdtscp()
 
         get2 := 0
 
-	startMiss := rdtsc()
+	startMiss := rdtscp()
 	for i := N; i < N*2; i++ {
 		get2 += m[i]
 	}
-	endMiss := rdtsc()
+	endMiss := rdtscp()
 
-	startUpdate := rdtsc()
+	startUpdate := rdtscp()
 	for i := 0; i < N; i++ {
 		m[i] = i * 2
 	}
-	endUpdate := rdtsc()
+	endUpdate := rdtscp()
 
-	startDelete := rdtsc()
+	startDelete := rdtscp()
 	for i := 0; i < N; i++ {
 		delete(m, i)
 	}
-	endDelete := rdtsc()
+	endDelete := rdtscp()
 
         fmt.Printf("N: %d\nGet: %d\n", N, get + get2)
 	fmt.Printf("Insert: %s cycles\n", formatCycles(endInsert-startInsert))

@@ -3,9 +3,12 @@
 #include <unordered_map>
 #include <locale>
 
-uint64_t rdtsc() {
-    uint32_t lo, hi;
-    __asm__ __volatile__ ("rdtsc" : "=a" (lo), "=d" (hi));
+uint64_t rdtscp() {
+    uint32_t lo, hi, tsc_aux;
+    __asm__ __volatile__ (
+        "rdtscp" 
+        : "=a" (lo), "=d" (hi), "=c" (tsc_aux)
+    );
     return ((uint64_t)hi << 32) | lo;
 }
 
@@ -22,40 +25,40 @@ int main() {
 
     std::unordered_map<int64_t, int64_t> m;
 
-    uint64_t start_insert = rdtsc();
+    uint64_t start_insert = rdtscp();
     for (int i = 0; i < N; ++i) {
         m[i] = i;
     }
-    uint64_t end_insert = rdtsc();
+    uint64_t end_insert = rdtscp();
 
-    uint64_t start_hit = rdtsc();
+    uint64_t start_hit = rdtscp();
     for (int i = 0; i < N; ++i) {
         get += m[i];
     }
-    uint64_t end_hit = rdtsc();
+    uint64_t end_hit = rdtscp();
 
     int64_t get2 = 0;
 
-    uint64_t start_miss = rdtsc();
+    uint64_t start_miss = rdtscp();
     for (int i = N; i < N * 2; ++i) {
         auto it = m.find(i);
         if (it != m.end()) {
             get2 += it->second;
         }
     }
-    uint64_t end_miss = rdtsc();
+    uint64_t end_miss = rdtscp();
 
-    uint64_t start_update = rdtsc();
+    uint64_t start_update = rdtscp();
     for (int i = 0; i < N; ++i) {
         m[i] = i * 2;
     }
-    uint64_t end_update = rdtsc();
+    uint64_t end_update = rdtscp();
 
-    uint64_t start_delete = rdtsc();
+    uint64_t start_delete = rdtscp();
     for (int i = 0; i < N; ++i) {
         m.erase(i);
     }
-    uint64_t end_delete = rdtsc();
+    uint64_t end_delete = rdtscp();
 
     std::cout.imbue(std::locale("en_US.UTF-8"));
     std::cout << "N: " << N << "\nGet: " << get + get2 << "\n";
