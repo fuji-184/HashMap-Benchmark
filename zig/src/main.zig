@@ -1,11 +1,15 @@
 const std = @import("std");
 
 inline fn rdtscp() u64 {
-    return asm volatile ("rdtscp"
-        : [ret] "={ax}" (-> u64)
-        :
-        : "dx", "cx" 
+    var lo: u32 = undefined;
+    var hi: u32 = undefined;
+    var cx: u32 = undefined;
+    asm volatile ("rdtscp"
+        : [lo] "=r" (lo),
+          [hi] "=r" (hi),
+          [cx] "=r" (cx),
     );
+    return (@as(u64, hi) << 32) | lo;
 }
 
 fn printFmt(label: []const u8, val: u64) void {
