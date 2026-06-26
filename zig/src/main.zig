@@ -5,9 +5,9 @@ inline fn rdtscp() u64 {
     var hi: u32 = undefined;
     var cx: u32 = undefined;
     asm volatile ("rdtscp"
-        : [lo] "=r" (lo),
-          [hi] "=r" (hi),
-          [cx] "=r" (cx),
+        : [lo] "={eax}" (lo),
+          [hi] "={edx}" (hi),
+          [cx] "={ecx}" (cx),
     );
     return (@as(u64, hi) << 32) | lo;
 }
