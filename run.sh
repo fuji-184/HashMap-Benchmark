@@ -1,5 +1,7 @@
 #!/bin/bash
 
+clear
+
 set -e
 
 echo "=== 1. COMPILING ==="
@@ -9,7 +11,10 @@ cd cpp
 clang++ -O3 -march=native -std=c++23 main.cpp -o main -L../f_count/target/release -lf_count -Wl,-rpath,../f_count/target/release
 
 echo "[+] Compiling C++ Abseil Swiss Table with Clang..."
-clang++ -O3 -march=native -std=c++23 abseil_flat_hashmap.cpp -o abseil_flat_hashmap -labsl_raw_hash_set -labsl_hash -labsl_city -L../f_count/target/release -lf_count -Wl,-rpath,../f_count/target/release
+#clang++ -O3 -march=native -std=c++23 abseil_flat_hashmap.cpp -o abseil_flat_hashmap -labsl_raw_hash_set -labsl_hash -labsl_city -L../f_count/target/release -lf_count -Wl,-rpath,../f_count/target/release
+clang++ -O3 -march=native -std=c++23 abseil_flat_hashmap.cpp -o abseil_flat_hashmap \
+  $(pkg-config --libs absl_flat_hash_map) \
+  -L../f_count/target/release -lf_count -Wl,-rpath,../f_count/target/release
 
 echo "[+] Compiling Rust..."
 cd ../rust

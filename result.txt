@@ -1,0 +1,261 @@
+=== 2. RUNNING BENCHMARKS ===
+
+-----------------------------------
+C++ (std::unordered_map via Clang)
+-----------------------------------
+Status Init: 0
+
+=== BENCHMARK: INSERT ===
+
+[PERF REPORT]
+  Wall Time : 1207.589 ms
+
+=== BENCHMARK: GET HIT ===
+
+[PERF REPORT]
+  Wall Time : 589.890 ms
+
+=== BENCHMARK: GET MISS ===
+
+[PERF REPORT]
+  Wall Time : 727.879 ms
+
+=== BENCHMARK: RE-INSERT ===
+
+[PERF REPORT]
+  Wall Time : 680.428 ms
+
+=== BENCHMARK: REMOVE ===
+
+[PERF REPORT]
+  Wall Time : 836.609 ms
+
+N: 1000000
+Get: 499122850554
+-----------------------------------
+C++ (absl::flat_hash_map via Clang)
+-----------------------------------
+Status Init: 0
+
+=== BENCHMARK: INSERT ===
+
+[PERF REPORT]
+  Wall Time : 905.354 ms
+
+=== BENCHMARK: GET HIT ===
+
+[PERF REPORT]
+  Wall Time : 554.019 ms
+
+=== BENCHMARK: GET MISS ===
+
+[PERF REPORT]
+  Wall Time : 300.870 ms
+
+=== BENCHMARK: RE-INSERT ===
+
+[PERF REPORT]
+  Wall Time : 521.119 ms
+
+=== BENCHMARK: REMOVE ===
+
+[PERF REPORT]
+  Wall Time : 596.484 ms
+
+N: 1000000
+Get: 499122850554
+
+-----------------------------------
+Rust (std::collections::HashMap)
+-----------------------------------
+Status Init: 0
+
+=== BENCHMARK: INSERT ===
+
+[PERF REPORT]
+  Wall Time : 1086.646 ms
+
+=== BENCHMARK: GET HIT ===
+
+[PERF REPORT]
+  Wall Time : 544.399 ms
+
+=== BENCHMARK: GET MISS ===
+
+[PERF REPORT]
+  Wall Time : 485.601 ms
+
+=== BENCHMARK: RE-INSERT ===
+
+[PERF REPORT]
+  Wall Time : 668.186 ms
+
+=== BENCHMARK: REMOVE ===
+
+[PERF REPORT]
+  Wall Time : 732.746 ms
+
+N: 1000000
+Get: 499122850554
+
+-----------------------------------
+Rust (rustc_hash::FxHashMap)
+-----------------------------------
+Status Init: 0
+
+=== BENCHMARK: INSERT ===
+
+[PERF REPORT]
+  Wall Time : 902.790 ms
+
+=== BENCHMARK: GET HIT ===
+
+[PERF REPORT]
+  Wall Time : 438.689 ms
+
+=== BENCHMARK: GET MISS ===
+
+[PERF REPORT]
+  Wall Time : 493.310 ms
+
+=== BENCHMARK: RE-INSERT ===
+
+[PERF REPORT]
+  Wall Time : 614.763 ms
+
+=== BENCHMARK: REMOVE ===
+
+[PERF REPORT]
+  Wall Time : 688.051 ms
+
+N: 1000000
+Get: 499122850554
+
+-----------------------------------
+Rust (ahash::AHashMap)
+-----------------------------------
+Status Init: 0
+
+=== BENCHMARK: INSERT ===
+
+[PERF REPORT]
+  Wall Time : 977.536 ms
+
+=== BENCHMARK: GET HIT ===
+
+[PERF REPORT]
+  Wall Time : 602.305 ms
+
+=== BENCHMARK: GET MISS ===
+
+[PERF REPORT]
+  Wall Time : 447.811 ms
+
+=== BENCHMARK: RE-INSERT ===
+
+[PERF REPORT]
+  Wall Time : 616.655 ms
+
+=== BENCHMARK: REMOVE ===
+
+[PERF REPORT]
+  Wall Time : 689.359 ms
+
+N: 1000000
+Get: 499122850554
+
+-----------------------------------
+Rust (hashbrown::HashMap;)
+-----------------------------------
+Status Init: 0
+
+=== BENCHMARK: INSERT ===
+
+[PERF REPORT]
+  Wall Time : 930.782 ms
+
+=== BENCHMARK: GET HIT ===
+
+[PERF REPORT]
+  Wall Time : 601.190 ms
+
+=== BENCHMARK: GET MISS ===
+
+[PERF REPORT]
+  Wall Time : 465.427 ms
+
+=== BENCHMARK: RE-INSERT ===
+
+[PERF REPORT]
+  Wall Time : 625.254 ms
+
+=== BENCHMARK: REMOVE ===
+
+[PERF REPORT]
+  Wall Time : 536.168 ms
+
+N: 1000000
+Get: 499122850554
+
+-----------------------------------
+Zig (std::AutoHashMap)
+-----------------------------------
+Status Init: 0
+
+=== BENCHMARK: INSERT ===
+[PERF REPORT]
+  Wall Time : 850.537 ms
+
+=== BENCHMARK: GET HIT ===
+[PERF REPORT]
+  Wall Time : 384.376 ms
+
+=== BENCHMARK: GET MISS ===
+[PERF REPORT]
+  Wall Time : 35883.617 ms
+
+=== BENCHMARK: RE-INSERT ===
+[PERF REPORT]
+  Wall Time : 434.115 ms
+
+=== BENCHMARK: REMOVE ===
+[PERF REPORT]
+  Wall Time : 342.830 ms
+
+N: 1000000
+Get: 499122850554
+
+-----------------------------------
+Go (map[int]int)
+-----------------------------------
+Status Init: 0
+
+=== BENCHMARK: INSERT ===
+
+[PERF REPORT]
+  Wall Time : 1506.969 ms
+
+=== BENCHMARK: GET HIT ===
+
+[PERF REPORT]
+  Wall Time : 352.047 ms
+
+=== BENCHMARK: GET MISS ===
+
+[PERF REPORT]
+  Wall Time : 1034.326 ms
+
+=== BENCHMARK: RE-INSERT ===
+
+[PERF REPORT]
+  Wall Time : 660.573 ms
+
+=== BENCHMARK: REMOVE ===
+
+[PERF REPORT]
+  Wall Time : 456.326 ms
+
+N: 1000000
+Get: 499122850554
+
+=== Done ===
