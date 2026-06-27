@@ -31,10 +31,10 @@ cd rust_hashbrown
 RUSTFLAGS="-C target-cpu=native" cargo build --release
 cd ..
 
-echo "[+] Compiling Rust F_Map..."
-cd f_map
-RUSTFLAGS="-C target-cpu=native" cargo build --release
-cd ..
+#echo "[+] Compiling Rust F_Map..."
+#cd f_map
+#RUSTFLAGS="-C target-cpu=native" cargo build --release
+#cd ..
 
 echo "[+] Compiling Zig..."
 sed -i 's|"src/root.zig"|"src/main.zig"|g' zig/build.zig
@@ -91,12 +91,12 @@ cd ../rust_hashbrown
 sleep 1
 ./target/release/rust
 
-echo -e "\n-----------------------------------"
-echo "Rust (F_Map)"
-echo "-----------------------------------"
-cd ../f_map
-sleep 1
-./target/release/rust
+#echo -e "\n-----------------------------------"
+#echo "Rust (F_Map)"
+#echo "-----------------------------------"
+#cd ../f_map
+#sleep 1
+#./target/release/rust
 
 echo -e "\n-----------------------------------"
 echo "Zig (std::AutoHashMap)"
