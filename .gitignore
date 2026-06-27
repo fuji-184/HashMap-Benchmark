@@ -5,3 +5,5 @@
 /zig/main
 /zig/.zig-cache/
 /golang/golang
+/input_generator/target/
+input.bin
