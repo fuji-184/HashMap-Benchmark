@@ -5,13 +5,14 @@ set -e
 echo "=== 1. COMPILING ==="
 
 echo "[+] Compiling C++ with Clang..."
-clang++ -O3 -march=native -std=c++23 cpp/main.cpp -o cpp/main
+cd cpp
+clang++ -O3 -march=native -std=c++23 main.cpp -o main -L../f_count/target/release -lf_count -Wl,-rpath,../f_count/target/release
 
 echo "[+] Compiling C++ Abseil Swiss Table with Clang..."
-clang++ -O3 -march=native -std=c++23 cpp/abseil_flat_hashmap.cpp -labsl_raw_hash_set -labsl_hash -labsl_city -o cpp/abseil_flat_hashmap
+clang++ -O3 -march=native -std=c++23 abseil_flat_hashmap.cpp -o abseil_flat_hashmap -labsl_raw_hash_set -labsl_hash -labsl_city -L../f_count/target/release -lf_count -Wl,-rpath,../f_count/target/release
 
 echo "[+] Compiling Rust..."
-cd rust
+cd ../rust
 RUSTFLAGS="-C target-cpu=native" cargo build --release -q
 cd ..
 
@@ -30,15 +31,21 @@ cd rust_hashbrown
 RUSTFLAGS="-C target-cpu=native" cargo build --release
 cd ..
 
+echo "[+] Compiling Rust F_Map..."
+cd f_map
+RUSTFLAGS="-C target-cpu=native" cargo build --release
+cd ..
+
 echo "[+] Compiling Zig..."
 sed -i 's|"src/root.zig"|"src/main.zig"|g' zig/build.zig
 cd zig
-zig build -Doptimize=ReleaseFast
+#zig build -Doptimize=ReleaseFast
+zig build-exe src/main.zig -O ReleaseFast -lc -L ../f_count/target/release -lf_count -rpath ../f_count/target/release
 cd ..
 
 echo "[+] Compiling Go..."
 cd golang
-go build -o golang .
+CGO_ENABLED=1 go build -o golang main.go
 cd ..
 
 echo -e "\n=== 2. RUNNING BENCHMARKS ===\n"
@@ -46,49 +53,65 @@ echo -e "\n=== 2. RUNNING BENCHMARKS ===\n"
 echo "-----------------------------------"
 echo "C++ (std::unordered_map via Clang)"
 echo "-----------------------------------"
+cd cpp
 sleep 1
-./cpp/main
+./main
 
 echo "-----------------------------------"
 echo "C++ (absl::flat_hash_map via Clang)"
 echo "-----------------------------------"
 sleep 1
-./cpp/abseil_flat_hashmap
+./abseil_flat_hashmap
 
+cd ../rust
 echo -e "\n-----------------------------------"
 echo "Rust (std::collections::HashMap)"
 echo "-----------------------------------"
 sleep 1
-./rust/target/release/rust
+./target/release/rust
 
 echo -e "\n-----------------------------------"
 echo "Rust (rustc_hash::FxHashMap)"
 echo "-----------------------------------"
+cd ../rustc_hash
 sleep 1
-./rustc_hash/target/release/rust
+./target/release/rust
 
 echo -e "\n-----------------------------------"
 echo "Rust (ahash::AHashMap)"
 echo "-----------------------------------"
+cd ../rust_ahash
 sleep 1
-./rust_ahash/target/release/rust
+./target/release/rust
 
 echo -e "\n-----------------------------------"
 echo "Rust (hashbrown::HashMap;)"
 echo "-----------------------------------"
+cd ../rust_hashbrown
 sleep 1
-./rust_hashbrown/target/release/rust
+./target/release/rust
+
+echo -e "\n-----------------------------------"
+echo "Rust (F_Map)"
+echo "-----------------------------------"
+cd ../f_map
+sleep 1
+./target/release/rust
 
 echo -e "\n-----------------------------------"
 echo "Zig (std::AutoHashMap)"
 echo "-----------------------------------"
+cd ../zig
 sleep 1
-./zig/zig-out/bin/zig
+#./zig/zig-out/bin/zig
+./main
 
 echo -e "\n-----------------------------------"
 echo "Go (map[int]int)"
 echo "-----------------------------------"
+cd ../golang
 sleep 1
-./golang/golang
+./golang
 
+cd ..
 echo -e "\n=== Done ==="

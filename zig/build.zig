@@ -83,6 +83,21 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
+
+
+
+
+exe.root_module.addLibraryPath(b.path("../f_count/target/release"));
+    exe.root_module.linkSystemLibrary("f_count", .{});
+
+    // 3. Rpath buat linker final (pengganti -rpath) tetap ditaruh di exe
+    exe.addRPath(b.path("../f_count/target/release"));
+
+
+
+
+
+
     // This declares intent for the executable to be installed into the
     // install prefix when running `zig build` (i.e. when executing the default
     // step). By default the install prefix is `zig-out/` but can be overridden

@@ -2,22 +2,10 @@ use std::collections::HashMap;
 use std::arch::asm;
 use std::fs;
 
-fn rdtscp() -> u64 {
-    let low: u32;
-    let high: u32;
-    let _aux: u32; 
-    
-    unsafe {
-        asm!(
-            "rdtscp",
-            out("eax") low,
-            out("edx") high,
-            out("ecx") _aux, 
-            options(nomem, nostack)
-        );
-    }
-    
-    ((high as u64) << 32) | (low as u64)
+unsafe extern "C" {
+    fn init() -> i32;
+    fn start();
+    fn stop_and_print();
 }
 
 fn fmt_num(num: u64) -> String {
@@ -28,52 +16,67 @@ fn fmt_num(num: u64) -> String {
 }
 
 fn main() {
-    let input = fs::read_to_string("./input.txt").unwrap();
+    let input = fs::read_to_string("../input.txt").unwrap();
     let n: i64 = input.trim().parse().unwrap();
 
     let mut get: i64 = 0;
     let mut m = HashMap::new();
+    let mut get2: i64 = 0;
 
-    let start_insert = rdtscp();
+    let is_perf_ready = unsafe {
+        let init_status = init();
+        println!("Status Init: {}", init_status);
+        init_status == 0
+    };
+
+    if is_perf_ready { 
+        println!("\n=== BENCHMARK: INSERT ===");
+        unsafe { start(); } 
+    }
     for i in 0..n {
         m.insert(i, i);
     }
-    let end_insert = rdtscp();
+    if is_perf_ready { unsafe { stop_and_print(); } }
 
-    let start_hit = rdtscp();
+    if is_perf_ready { 
+        println!("\n=== BENCHMARK: GET 1 ===");
+        unsafe { start(); } 
+    }
     for i in 0..n {
         if let Some(val) = m.get(&i) {
             get += val;
         }
     }
-    let end_hit = rdtscp();
+    if is_perf_ready { unsafe { stop_and_print(); } }
 
-    let mut get2: i64 = 0;
-
-    let start_miss = rdtscp();
+    if is_perf_ready { 
+        println!("\n=== BENCHMARK: GET 2 ===");
+        unsafe { start(); } 
+    }
     for i in n..(n * 2) {
         if let Some(val) = m.get(&i) {
             get2 += val;
         }
     }
-    let end_miss = rdtscp();
+    if is_perf_ready { unsafe { stop_and_print(); } }
 
-    let start_update = rdtscp();
+    if is_perf_ready { 
+        println!("\n=== BENCHMARK: RE-INSERT ===");
+        unsafe { start(); } 
+    }
     for i in 0..n {
         m.insert(i, i * 2);
     }
-    let end_update = rdtscp();
+    if is_perf_ready { unsafe { stop_and_print(); } }
 
-    let start_delete = rdtscp();
+    if is_perf_ready { 
+        println!("\n=== BENCHMARK: REMOVE ===");
+        unsafe { start(); } 
+    }
     for i in 0..n {
         m.remove(&i);
     }
-    let end_delete = rdtscp();
+    if is_perf_ready { unsafe { stop_and_print(); } }
 
-    println!("N: {}\nGet: {}", n, get - get2);
-    println!("Insert: {} cycles", fmt_num(end_insert - start_insert));
-    println!("Get Hit: {} cycles", fmt_num(end_hit - start_hit));
-    println!("Get Miss: {} cycles", fmt_num(end_miss - start_miss));
-    println!("Update: {} cycles", fmt_num(end_update - start_update));
-    println!("Delete: {} cycles", fmt_num(end_delete - start_delete));
+    println!("\nN: {}\nGet: {}", n, get - get2);
 }

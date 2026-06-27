@@ -2,5 +2,6 @@
 /cpp/abseil_flat_hashmap
 /rust/target/
 /zig/zig-out/
+/zig/main
 /zig/.zig-cache/
 /golang/golang
