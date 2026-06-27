@@ -1,0 +1,3 @@
+[submodule "f_count"]
+	path = f_count
+	url = https://github.com/fuji-184/F_Count
