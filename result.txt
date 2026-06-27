@@ -8,27 +8,42 @@ Status Init: 0
 === BENCHMARK: INSERT ===
 
 [PERF REPORT]
-  Wall Time : 1207.589 ms
+  Task Clock (Duration) : 915.252 ms
+  Page Faults           : 26.931 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET HIT ===
 
 [PERF REPORT]
-  Wall Time : 589.890 ms
+  Task Clock (Duration) : 389.214 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET MISS ===
 
 [PERF REPORT]
-  Wall Time : 727.879 ms
+  Task Clock (Duration) : 659.853 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: RE-INSERT ===
 
 [PERF REPORT]
-  Wall Time : 680.428 ms
+  Task Clock (Duration) : 444.149 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: REMOVE ===
 
 [PERF REPORT]
-  Wall Time : 836.609 ms
+  Task Clock (Duration) : 611.140 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 N: 1000000
 Get: 499122850554
@@ -40,27 +55,42 @@ Status Init: 0
 === BENCHMARK: INSERT ===
 
 [PERF REPORT]
-  Wall Time : 905.354 ms
+  Task Clock (Duration) : 774.773 ms
+  Page Faults           : 47.737 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET HIT ===
 
 [PERF REPORT]
-  Wall Time : 554.019 ms
+  Task Clock (Duration) : 239.852 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET MISS ===
 
 [PERF REPORT]
-  Wall Time : 300.870 ms
+  Task Clock (Duration) : 194.645 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: RE-INSERT ===
 
 [PERF REPORT]
-  Wall Time : 521.119 ms
+  Task Clock (Duration) : 351.868 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: REMOVE ===
 
 [PERF REPORT]
-  Wall Time : 596.484 ms
+  Task Clock (Duration) : 415.017 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 N: 1000000
 Get: 499122850554
@@ -73,27 +103,42 @@ Status Init: 0
 === BENCHMARK: INSERT ===
 
 [PERF REPORT]
-  Wall Time : 1086.646 ms
+  Task Clock (Duration) : 949.025 ms
+  Page Faults           : 34.228 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET HIT ===
 
 [PERF REPORT]
-  Wall Time : 544.399 ms
+  Task Clock (Duration) : 484.838 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET MISS ===
 
 [PERF REPORT]
-  Wall Time : 485.601 ms
+  Task Clock (Duration) : 394.270 ms
+  Page Faults           : 27 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: RE-INSERT ===
 
 [PERF REPORT]
-  Wall Time : 668.186 ms
+  Task Clock (Duration) : 441.309 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: REMOVE ===
 
 [PERF REPORT]
-  Wall Time : 732.746 ms
+  Task Clock (Duration) : 399.893 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 N: 1000000
 Get: 499122850554
@@ -106,27 +151,42 @@ Status Init: 0
 === BENCHMARK: INSERT ===
 
 [PERF REPORT]
-  Wall Time : 902.790 ms
+  Task Clock (Duration) : 794.346 ms
+  Page Faults           : 34.228 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET HIT ===
 
 [PERF REPORT]
-  Wall Time : 438.689 ms
+  Task Clock (Duration) : 140.924 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET MISS ===
 
 [PERF REPORT]
-  Wall Time : 493.310 ms
+  Task Clock (Duration) : 354.449 ms
+  Page Faults           : 27 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: RE-INSERT ===
 
 [PERF REPORT]
-  Wall Time : 614.763 ms
+  Task Clock (Duration) : 486.914 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: REMOVE ===
 
 [PERF REPORT]
-  Wall Time : 688.051 ms
+  Task Clock (Duration) : 359.659 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 N: 1000000
 Get: 499122850554
@@ -139,27 +199,42 @@ Status Init: 0
 === BENCHMARK: INSERT ===
 
 [PERF REPORT]
-  Wall Time : 977.536 ms
+  Task Clock (Duration) : 742.275 ms
+  Page Faults           : 34.228 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET HIT ===
 
 [PERF REPORT]
-  Wall Time : 602.305 ms
+  Task Clock (Duration) : 162.818 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET MISS ===
 
 [PERF REPORT]
-  Wall Time : 447.811 ms
+  Task Clock (Duration) : 369.763 ms
+  Page Faults           : 27 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: RE-INSERT ===
 
 [PERF REPORT]
-  Wall Time : 616.655 ms
+  Task Clock (Duration) : 476.607 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: REMOVE ===
 
 [PERF REPORT]
-  Wall Time : 689.359 ms
+  Task Clock (Duration) : 390.596 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 N: 1000000
 Get: 499122850554
@@ -172,27 +247,42 @@ Status Init: 0
 === BENCHMARK: INSERT ===
 
 [PERF REPORT]
-  Wall Time : 930.782 ms
+  Task Clock (Duration) : 859.340 ms
+  Page Faults           : 34.228 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET HIT ===
 
 [PERF REPORT]
-  Wall Time : 601.190 ms
+  Task Clock (Duration) : 161.341 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET MISS ===
 
 [PERF REPORT]
-  Wall Time : 465.427 ms
+  Task Clock (Duration) : 354.977 ms
+  Page Faults           : 27 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: RE-INSERT ===
 
 [PERF REPORT]
-  Wall Time : 625.254 ms
+  Task Clock (Duration) : 494.339 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: REMOVE ===
 
 [PERF REPORT]
-  Wall Time : 536.168 ms
+  Task Clock (Duration) : 368.572 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 N: 1000000
 Get: 499122850554
@@ -204,23 +294,38 @@ Status Init: 0
 
 === BENCHMARK: INSERT ===
 [PERF REPORT]
-  Wall Time : 850.537 ms
+  Task Clock (Duration) : 524.694 ms
+  Page Faults           : 25.616 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET HIT ===
 [PERF REPORT]
-  Wall Time : 384.376 ms
+  Task Clock (Duration) : 109.758 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET MISS ===
 [PERF REPORT]
-  Wall Time : 35883.617 ms
+  Task Clock (Duration) : 181.868 ms
+  Page Faults           : 1 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: RE-INSERT ===
 [PERF REPORT]
-  Wall Time : 434.115 ms
+  Task Clock (Duration) : 147.282 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: REMOVE ===
 [PERF REPORT]
-  Wall Time : 342.830 ms
+  Task Clock (Duration) : 103.749 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 N: 1000000
 Get: 499122850554
@@ -233,27 +338,42 @@ Status Init: 0
 === BENCHMARK: INSERT ===
 
 [PERF REPORT]
-  Wall Time : 1506.969 ms
+  Task Clock (Duration) : 1246.339 ms
+  Page Faults           : 55.776 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET HIT ===
 
 [PERF REPORT]
-  Wall Time : 352.047 ms
+  Task Clock (Duration) : 175.621 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: GET MISS ===
 
 [PERF REPORT]
-  Wall Time : 1034.326 ms
+  Task Clock (Duration) : 581.796 ms
+  Page Faults           : 19 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: RE-INSERT ===
 
 [PERF REPORT]
-  Wall Time : 660.573 ms
+  Task Clock (Duration) : 177.314 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 === BENCHMARK: REMOVE ===
 
 [PERF REPORT]
-  Wall Time : 456.326 ms
+  Task Clock (Duration) : 270.076 ms
+  Page Faults           : 0 events
+  Context Switches      : 0 events
+  CPU Migrations        : 0 events
 
 N: 1000000
 Get: 499122850554

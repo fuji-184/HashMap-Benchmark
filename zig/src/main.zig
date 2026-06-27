@@ -4,17 +4,21 @@ extern "c" fn init() i32;
 extern "c" fn start() void;
 extern "c" fn stop_and_print() void;
 
-fn readStrings(allocator: std.mem.Allocator, path: []const u8) ![][]u8 {
-    const file = try std.fs.cwd().openFile(path, .{});
-    defer file.close();
+fn readStrings(allocator: std.mem.Allocator, io: std.Io, path: []const u8) ![][]u8 {
+    const file = try std.Io.Dir.cwd().openFile(io, path, .{});
+    defer file.close(io);
 
-    const data = try file.readToEndAlloc(allocator, std.math.maxInt(usize));
-    defer allocator.free(data);
+    var read_buffer: [65536]u8 = undefined;
+    var fr = file.reader(io, &read_buffer);
 
+    var buf = std.ArrayListUnmanaged(u8).empty;
+    defer buf.deinit(allocator);
+    try fr.interface.appendRemaining(allocator, &buf, .unlimited);
+
+    const data = buf.items;
     const n = std.mem.readInt(u64, data[0..8], .little);
     var strings = try allocator.alloc([]u8, n);
     var pos: usize = 8;
-
     for (0..n) |idx| {
         const len = std.mem.readInt(u32, data[pos..][0..4], .little);
         pos += 4;
@@ -22,7 +26,6 @@ fn readStrings(allocator: std.mem.Allocator, path: []const u8) ![][]u8 {
         pos += len;
         strings[idx] = s;
     }
-
     return strings;
 }
 
@@ -32,19 +35,17 @@ fn reverseString(allocator: std.mem.Allocator, s: []const u8) ![]u8 {
     return result;
 }
 
-pub fn main() !void {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    defer _ = gpa.deinit();
-    const allocator = gpa.allocator();
+pub fn main(process_init: std.process.Init) !void {
+    const io = process_init.io;
+    const allocator = std.heap.smp_allocator;
 
-    const strings = try readStrings(allocator, "../input.bin");
+    const strings = try readStrings(allocator, io, "../input.bin");
     defer {
         for (strings) |s| allocator.free(s);
         allocator.free(strings);
     }
 
     const n = strings.len;
-
     const init_status = init();
     if (init_status == 0) {
         std.debug.print("Status Init: 0\n", .{});
