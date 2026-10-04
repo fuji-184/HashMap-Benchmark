@@ -3,94 +3,156 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
-#include <algorithm>
 #include <cstdint>
 
 extern "C" {
-    int init();
+    void init();
     void start();
-    void stop_and_print();
+    void stop();
+    void print();
+    void reset();
 }
 
-std::vector<std::string> read_strings(const char* path) {
+enum class InputType { String, Integer };
+
+InputType detect_type(const char* path) {
     std::ifstream file(path, std::ios::binary);
-    if (!file) {
-        std::cerr << "Error: Gagal membuka " << path << "\n";
-        exit(1);
-    }
+    if (!file) { std::cerr << "Error: cannot open " << path << "\n"; exit(1); }
 
     uint64_t n = 0;
     file.read(reinterpret_cast<char*>(&n), 8);
 
-    std::vector<std::string> strings;
-    strings.reserve(n);
+    uint8_t type_byte = 0;
+    file.read(reinterpret_cast<char*>(&type_byte), 1);
 
+    return (type_byte == 1) ? InputType::Integer : InputType::String;
+}
+
+std::vector<std::string> read_strings(const char* path) {
+    std::ifstream file(path, std::ios::binary);
+    uint64_t n = 0;
+    file.read(reinterpret_cast<char*>(&n), 8);
+    file.seekg(1, std::ios::cur);
+
+    std::vector<std::string> result;
+    result.reserve(n);
     for (uint64_t i = 0; i < n; ++i) {
         uint32_t len = 0;
         file.read(reinterpret_cast<char*>(&len), 4);
         std::string s(len, '\0');
-        file.read(&s[0], len);
-        strings.push_back(std::move(s));
+        file.read(s.data(), len);
+        result.push_back(std::move(s));
     }
-
-    return strings;
+    return result;
 }
 
-int main() {
-    auto strings = read_strings("../input.bin");
-    size_t n = strings.size();
+std::vector<uint64_t> read_integers(const char* path) {
+    std::ifstream file(path, std::ios::binary);
+    uint64_t n = 0;
+    file.read(reinterpret_cast<char*>(&n), 8);
+    file.seekg(1, std::ios::cur);
 
-    int64_t get = 0;
-    int64_t get2 = 0;
-    std::unordered_map<std::string, int64_t> m;
+    std::vector<uint64_t> result(n);
+    file.read(reinterpret_cast<char*>(result.data()), n * 8);
+    return result;
+}
 
-    int init_status = init();
-    if (init_status == 0) {
-        std::cout << "Status Init: 0\n";
-    }
+template<typename K>
+void run_benchmarks(const std::vector<K>& keys) {
+    size_t n = keys.size();
+    int64_t get = 0, get2 = 0;
 
+    std::unordered_map<K, int64_t> m;
+    m.reserve(keys.size());
+
+
+
+    
     std::cout << "\n=== BENCHMARK: INSERT ===" << std::endl;
     start();
     for (size_t i = 0; i < n; ++i) {
-        m[strings[i]] = static_cast<int64_t>(i);
+        
+        m[keys[i]] = static_cast<int64_t>(i);
+    
     }
-    stop_and_print();
+    stop();
+    print();
+    reset();
+
+
+    
+
+    std::cout << "\n=== BENCHMARK: INSERT ===" << std::endl;
+    for (size_t i = 0; i < n; ++i) {
+        start();
+        m[keys[i]] = static_cast<int64_t>(i);
+        stop();
+    }
+    print();
+    reset();
 
     std::cout << "\n=== BENCHMARK: GET HIT ===" << std::endl;
-    start();
-    for (const auto& s : strings) {
-        auto it = m.find(s);
-        if (it != m.end()) {
-            get += it->second;
-        }
-    }
-    stop_and_print();
+    for (const auto& k : keys) {
+        start();
+        auto it = m.find(k);
+        stop();
+        if (it != m.end()) get += it->second;
+    }   
+    print();
+    reset();
 
     std::cout << "\n=== BENCHMARK: GET MISS ===" << std::endl;
-    start();
-    for (const auto& s : strings) {
-        std::string miss(s.rbegin(), s.rend());
+    for (const auto& k : keys) {
+        K miss;
+        if constexpr (std::is_same_v<K, std::string>)
+            miss = std::string(k.rbegin(), k.rend());
+        else
+            miss = k + 1;
+        start();
         auto it = m.find(miss);
-        if (it != m.end()) {
-            get2 += it->second;
-        }
+        stop();
+        if (it != m.end()) get2 += it->second;
     }
-    stop_and_print();
+    print();
+    reset();
 
     std::cout << "\n=== BENCHMARK: RE-INSERT ===" << std::endl;
-    start();
     for (size_t i = 0; i < n; ++i) {
-        m[strings[i]] = static_cast<int64_t>(i) * 2;
+        auto i2 = static_cast<int64_t>(i * 2);
+        start();
+        m[keys[i]] = i2;
+        stop();
     }
-    stop_and_print();
+    print();
+    reset();
 
     std::cout << "\n=== BENCHMARK: REMOVE ===" << std::endl;
-    start();
-    for (const auto& s : strings) {
-        m.erase(s);
+    
+    for (const auto& k : keys) {
+        start();
+        m.erase(k);
+        stop();
     }
-    stop_and_print();
+    print();
+    reset();
 
     std::cout << "\nN: " << n << "\nGet: " << (get - get2) << "\n";
+}
+
+int main() {
+    const char* path = "../input.bin";
+    init();
+
+    switch (detect_type(path)) {
+        case InputType::Integer:
+            std::cout << "[i] Detected: integer\n";
+            run_benchmarks(read_integers(path));
+            break;
+        case InputType::String:
+            std::cout << "[i] Detected: string\n";
+            run_benchmarks(read_strings(path));
+            break;
+    }
+
     return 0;
 }

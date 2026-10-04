@@ -37,7 +37,7 @@ fi
 ln -sf "libf_count_${F_COUNT_FEATURE}.so" f_count/target/release/libf_count.so
 echo "[~] Using f_count feature: $F_COUNT_FEATURE"
 
-# ── input_generator: recompile if binary missing OR code is newer ──
+# ── input_generator: recompile if binary missing OR src/Cargo.toml newer ──
 if [ ! -f "input_generator/target/release/input_generator" ] || [ "input_generator/src/main.rs" -nt "input_generator/target/release/input_generator" ] || [ "input_generator/Cargo.toml" -nt "input_generator/target/release/input_generator" ]; then
     echo "[+] Building input_generator..."
     cd input_generator
@@ -45,31 +45,12 @@ if [ ! -f "input_generator/target/release/input_generator" ] || [ "input_generat
     cd ..
 fi
 
-# ── print available input types ──
-echo "[i] Available input types: string | integer"
-echo "[i] Usage: ./run.sh [f_count_feature] [input_type] [extra args]"
-echo "[i]   e.g: ./run.sh time string --count 500000 --min-len 4 --max-len 16"
-echo "[i]   e.g: ./run.sh rdtscp integer --count 1000000 --min 0 --max 999999"
-
-# ── select input type (2nd arg, default: string) ──
-INPUT_TYPE="${2:-string}"
-case "$INPUT_TYPE" in
-    string|integer) ;;
-    *)
-        echo "Error: unknown input type '$INPUT_TYPE'. Available: string | integer"
-        exit 1
-        ;;
-esac
-
-# shift extra args (everything after 2nd arg passed to input_generator)
-INPUT_ARGS="--type $INPUT_TYPE ${@:3}"
-
 # ── input.bin: generate if missing OR input_generator was just rebuilt ──
 if [ ! -f "input.bin" ] || [ "input_generator/target/release/input_generator" -nt "input.bin" ]; then
-    echo "[+] Generating input.bin (type: $INPUT_TYPE)..."
-cd input_generator
-./target/release/input_generator $INPUT_ARGS
-cd ..
+    echo "[+] Generating input.bin..."   
+   cd input_generator
+   ./target/release/input_generator
+   cd ..
 else
     echo "[~] input.bin already exists, skipping generation."
 fi
